@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Prediction</title>
+    <!-- Styles -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://png.pngtree.com/thumb_back/fh260/background/20230612/pngtree-cancer-cell-with-a-tumor-on-its-surface-image_2970492.jpg') center/cover no-repeat;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            text-align: center;
+            padding: 20px;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px; /* Increased font size */
+            margin-bottom: 10px;
+            background-color: #6fc0db; /* Background color for heading */
+            color: #000000; /* Text color for heading */
+            padding: 10px;
+            border: 2px solid #6600ff; /* Border around heading */
+            border-radius: 10px;
+            font-weight: bold; /* Bold text */
+            width: 60%; /* Adjusted width */
+            box-sizing: border-box; /* Ensures full visibility */
+            position: relative; /* Ensure z-index works correctly */
+            z-index: 1; /* Place the heading above the form */
+            margin: auto; /* Center the heading */
+        }
+        
+        .additional-box {
+            background-color: #0074cc; /* Blue background color */
+            color: #fff; /* White text color */
+            padding: 15px; /* Adjusted padding */
+            border-radius: 10px;
+            box-shadow: 0 0 10px #000000;
+            text-align: center;
+            margin-top: 20px; /* Added margin-top */
+            width: 60%; /* Adjusted width */
+            margin-left: auto; /* Centering the box horizontally */
+            margin-right: auto; /* Centering the box horizontally */
+            position: relative; /* Ensure z-index works correctly */
+            z-index: 0; /* Place the box behind the heading */
+        }
+        .additional-box h2 {
+            font-weight: bold; /* Set text to bold */
+            color: #000000; /* Black text color */
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 15px; /* Adjusted padding */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 20px; /* Added margin-top */
+            width: 60%; /* Adjusted width */
+            margin-left: auto; /* Centering the form horizontally */
+            margin-right: auto; /* Centering the form horizontally */
+            position: relative; /* Ensure z-index works correctly */
+            z-index: 0; /* Place the form behind the heading */
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 10px 0;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        input[type="number"] {
+            width: 60%; /* Adjust the width as needed */
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .predict-button {
+            margin-top: 20px;
+        }
+
+        #prediction-text {
+            color: rgb(255, 255, 255); /* Change color here */
+        }
+        
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: #fff;
+            position: relative; /* Ensure z-index works correctly */
+            z-index: 1; /* Place the result above the form */
+        }
+
+        .cancer {
+            background-color: #ff6347;
+        }
+
+        .no-cancer {
+            background-color: #32cd32;
+        }
+
+        #info {
+            color: #fff;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Breast Cancer Prediction</h1>
+        <p id="prediction-text">ENTER THE VALUES TO PREDICT THE LIKELIHOOD OF BREAST CANCER</p>
+        <!-- Form -->
+        <form id="predictionForm" method="post" action="predict.php">
+            <label for="name"><b>Name:</b></label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="dob"><b>Date of Birth:</b></label>
+            <input type="date" id="dob" name="dob" required>
+
+            <label for="gender"><b>Gender:</b></label>
+            <select id="gender" name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+
+            <label for="urineValue"><b>Urine Value (20.3 and ABOVE):</b></label>
+            <input type="number" id="urineValue" name="urineValue" min="20.3" step="0.1" required>
+
+            <label for="biomarkValue"><b>Biomark Value (44.5 and ABOVE):</b></label>
+            <input type="number" id="biomarkValue" name="biomarkValue" min="44.5" step="0.1" required>
+
+            <label for="sensorValue"><b>Sensor Value (0.082 - 0.20):</b></label>
+            <input type="number" id="sensorValue" name="sensorValue" min="0.082" max="0.20" step="0.001" required>
+
+            <label for="email"><b>Email:</b></label>
+            <input type="email" id="email" name="email" placeholder="example@example.com" required>
+
+            <label for="phone"><b>Phone Number:</b></label>
+            <div style="display: flex;">
+                <select id="countryCode" name="countryCode" style="flex: 1;">
+                    <option value="+91">+91 (India)</option>
+                </select>
+                <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required style="flex: 3;">
+            </div>
+
+            <button type="submit" class="predict-button">Predict</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+
+        function predict() {
+        // Retrieve values from the form
+        var name = document.getElementById('name').value;
+        var dob = document.getElementById('dob').value;
+        var gender = document.getElementById('gender').value;
+        var urineValue = parseFloat(document.getElementById('urineValue').value);
+        var biomarkValue = parseFloat(document.getElementById('biomarkValue').value);
+        var sensorValue = parseFloat(document.getElementById('sensorValue').value);
+    
+        // Example classification report data
+        var classificationReport = {
+            'accuracy': 0.96,
+            'precision': {'B': 0.96, 'M': 0.96},
+            'recall': {'B': 0.97, 'M': 0.94},
+            'f1-score': {'B': 0.96, 'M': 0.95},
+            'support': {'B': 67, 'M': 47}
+        };
+    
+        // Set your threshold
+        var threshold = 0.95;
+    
+        // Perform prediction logic here
+        // For simplicity, let's assume a random prediction
+        var prediction = Math.random() >= 0.5 ? 'PERSON IS HAVING BREAST CANCER' : 'PERSON IS DOING WELL';
+    
+        // Display prediction result
+        var resultElement = document.getElementById('result');
+        resultElement.innerHTML = 'Prediction Result: ' + prediction;
+    
+        // Change background color based on threshold
+        resultElement.className = classificationReport['precision'][prediction] >= threshold ? 'cancer' : 'no-cancer';
+    
+        // Scroll to the top of the page
+        scrollToTop();
+    }
+    
+    function scrollToTop() {
+        // Scroll to the bottom of the page smoothly
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+    
+    </script>
+</body>
+</html>

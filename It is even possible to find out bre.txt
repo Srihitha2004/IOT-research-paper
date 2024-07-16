@@ -1,0 +1,12 @@
+It is even possible to find out breast cancer by using human urine and Electronic nose device is best known for its specificity in detecting breast cancer. Comparably, early detection of breast cancer could be identified by the VOMs present in urine is used potentially to serve as biomakers. The biomakers helps to differentiate between localized and metastatic breast cancer. To analyze uninary VOCs, mass spectrometric methods are used potentially [7].
+
+
+
+with the help of machine learning algorithms detection of breast cancer can be diagnose by Support Vector Machines (SVM) and Radical Basis Neural Networks. Random Forest is used as potential of SVM with Deep Learning models to detect breast cancer. Multilayer Perceptron is best in prediction of breast cancer with SVM and Random Forest. But the people should train the machines each and every step until and unless the machine gets clarity on the detection. Training the machine is not quick process and there's no guarantee that the machine detects the cancer in early stage [8].
+
+
+
+[7,8,9,10] there are many possible ways to detect breast cancer such as urine sample, blood sample, tears samples and many more. Even dogs are used to sniff the person to identify the breast cancer. machine learning algorithms are used to identify accuracy percentage of breast cancer with the help of support Vector Machines (SVM) ,Radical Basis Neural Networks, Random Forest. are used as potential detection. In Machine Learning, the techniques are also used like Decision tree (DT) , K-nearest neighbors (KNN), Naive bayes (NB) are tested and predicted the breast cancer with real medical images. But this does not classify the stages of breast cancer. it even takes time to identify the breast cancer. whereas Rapid test can be identified breast cancer at early stage with the stages.
+
+
+

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://www.ihi.europa.eu/sites/default/files/styles/newsletter/public/uploads/Newsroom%20images/Stomach%20cancer%20cells%20illustration.%20By%20Kateryna%20Kon%20via%20Shutterstock.jpg?itok=cQIDVp9y') center/cover no-repeat;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #000; /* Set text color to black */
+        }
+
+        #container {
+            text-align: center;
+            color: #fff;
+            padding: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%; /* Adjusted width */
+        }
+
+        h2 {
+            font-size: 32px; /* Increased font size */
+            margin-bottom: 10px;
+            background-color: #6fcodb; /* Background color for heading */
+            color: #000; /* Text color for heading */
+            padding: 10px;
+            border: 2px solid #000; /* Border around heading */
+            border-radius: 10px;
+            font-weight: bold; /* Bold text */
+            width: 60%; /* Adjusted width */
+            box-sizing: border-box; /* Ensures full visibility */
+            position: relative; /* Ensure z-index works correctly */
+            z-index: 1; /* Place the heading above the form */
+            margin: auto; /* Center the heading */
+        }
+
+        .additional-box {
+            background-color: #0074cc; /* Blue background color */
+            color: #fff; /* White text color */
+            padding: 15px; /* Adjusted padding */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 20px; /* Added margin-top */
+            width: 60%; /* Adjusted width */
+            margin-left: auto; /* Centering the box horizontally */
+            margin-right: auto; /* Centering the box horizontally */
+            position: relative; /* Ensure z-index works correctly */
+            z-index: 0; /* Place the box behind the heading */
+        }
+
+        .additional-box h2 {
+            font-weight: bold; /* Set text to bold */
+            color: #000; /* Black text color */
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 15px; /* Adjusted padding */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 20px; /* Added margin-top */
+            width: 60%; /* Adjusted width */
+            margin-left: auto; /* Centering the form horizontally */
+            margin-right: auto; /* Centering the form horizontally */
+            position: relative; /* Ensure z-index works correctly */
+            z-index: 0; /* Place the form behind the heading */
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            color: #000; /* Set text color for labels to white */
+        }
+
+        input,
+        select {
+            width: 80%; /* Adjusted width */
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            color: #000; /* Set text color for form fields to black */
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .predict-button {
+            margin-top: 20px; /* Adjust margin as needed */
+        }
+
+
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: #fff;
+            position: relative; /* Ensure z-index works correctly */
+            z-index: 1; /* Place the result above the form */
+        }
+
+        .cancer {
+            background-color: #ff6347;
+        }
+
+        .no-cancer {
+            background-color: #32cd32;
+        }
+
+        #info {
+            color: #fff;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <h1>Breast Cancer Prediction</h1>
+        <div class="additional-box">
+            <h2>Breast Cancer Predictor</h2>
+        </div>
+        <p>ENTER THE VALUES TO PREDICT THE LIKELIHOOD OF BREAST CANCER</p>
+
+        <form id="predictionForm">
+            <label for="name"><b>Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+
+            <label for="urineValue">Urine Value (20.3 and ABOVE):</label>
+            <input type="number" id="urineValue" name="urineValue" min="20.3" required>
+
+            <label for="biomarkValue">Biomark Value (44.5 - ABOVE):</label>
+            <input type="number" id="biomarkValue" name="biomarkValue" min="44.5" max="ABOVE" required>
+
+            <label for="sensorValue">Sensor Value (0.082 - 0.20):</label>
+            <input type="number" id="sensorValue" name="sensorValue" min="0.082" max="0.20" step="0.1" required>
+
+            <button type="button" onclick="predict()" class="predict-button">Predict</button>
+
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+   <script>
+    function predict() {
+        // Retrieve values from the form
+        var name = document.getElementById('name').value;
+        var dob = document.getElementById('dob').value;
+        var gender = document.getElementById('gender').value;
+        var urineValue = parseFloat(document.getElementById('urineValue').value);
+        var biomarkValue = parseFloat(document.getElementById('biomarkValue').value);
+        var sensorValue = parseFloat(document.getElementById('sensorValue').value);
+
+        // Example classification report data
+        var classificationReport = {
+            'accuracy': 0.96,
+            'precision': {'B': 0.96, 'M': 0.96},
+            'recall': {'B': 0.97, 'M': 0.94},
+            'f1-score': {'B': 0.96, 'M': 0.95},
+            'support': {'B': 67, 'M': 47}
+        };
+
+        // Set your threshold
+        var threshold = 0.95;
+
+        // Perform prediction logic here
+        // For simplicity, let's assume a random prediction
+        var prediction = Math.random() >= 0.5 ? 'PERSON IS HAVING BREAST CANCER' : 'PERSON IS DOING WELL';
+
+        // Display prediction result
+        var resultElement = document.getElementById('result');
+        resultElement.innerHTML = 'Prediction Result: ' + prediction;
+
+        // Change background color based on threshold
+        resultElement.className = classificationReport['precision'][prediction] >= threshold ? 'cancer' : 'no-cancer';
+
+        // Scroll to the top of the page
+        scrollToTop();
+    }
+
+    function scrollToTop() {
+         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+     }
+</script>
+
+
+</body>
+
+</html>
